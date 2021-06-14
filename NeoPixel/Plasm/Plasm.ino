@@ -1,7 +1,7 @@
 #include <FastLED.h>
 
 #define LED_TYPE WS2812
-#define LED_PIN 10
+#define LED_PIN A0
 
 const int16_t
   NUM_LEDS = 60,

@@ -29,7 +29,7 @@
 #define Display_reset_pin 10
 
 const uint8_t
-  DHT11_pin = 7;
+  DHT11_pin = 2;
 
 const uint32_t
   MeasureTick_ms = 1000;

@@ -1,23 +1,21 @@
-#include <Arduino.h>
 #include <U8g2lib.h>
-
-#ifdef U8X8_HAVE_HW_SPI
-#include <SPI.h>
-#endif
-#ifdef U8X8_HAVE_HW_I2C
 #include <Wire.h>
-#endif
 
 /*
   Wiring:
     CLK - 13
     MOS - 11
-    RES - 8
+    RES - 10
     DC - 9
-    CS - 10
+    CS - 8
 */
 
-U8G2_SH1106_128X64_NONAME_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
+#define Display_cs_pin 8
+#define Display_dc_pin 9
+#define Display_reset_pin 10
+
+U8G2_SH1106_128X64_NONAME_F_4W_HW_SPI u8g2(U8G2_R0, Display_cs_pin, Display_dc_pin, Display_reset_pin);
+
 typedef u8g2_uint_t u8g_uint_t;
 
 void draw_pixel(void) {
@@ -75,4 +73,3 @@ void loop(void) {
   uint16_t fps;
   fps = picture_loop_with_fps(draw_pixel);
 }
-

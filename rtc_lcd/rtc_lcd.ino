@@ -26,14 +26,14 @@
 #include <me_DateTime.h>
 
 const uint8_t
-  LCD_RS = 7,
-  LCD_EN = 8,
-  LCD_D4 = 9,
-  LCD_D5 = 10,
-  LCD_D6 = 11,
-  LCD_D7 = 12,
+  LCD_RS = 12,
+  LCD_EN = 11,
+  LCD_D4 = 7,
+  LCD_D5 = 6,
+  LCD_D6 = 5,
+  LCD_D7 = 4,
 
-  TICK_PIN = 3;
+  TICK_PIN = 2;
 
 const uint8_t
   MAX_MSG_LEN = 2 * 16;
@@ -61,6 +61,7 @@ void init_clock() {
 
   if (ds3231.wave32kEnabled()) {
     ds3231.disable32kWave();
+    Serial.println("32kHz wave disabled.");
   }
 
   if (ds3231.oscillatorWasStopped()) {
@@ -69,6 +70,17 @@ void init_clock() {
 
   if (!ds3231.isOscillatorAtBattery()) {
     ds3231.enableOscillatorAtBattery();
+    Serial.println("Enabled oscillator at battery.");
+  }
+
+  if (ds3231.getSqwMode() != 0) {
+    ds3231.setSqwMode(0);
+    Serial.println("Set 1Hz square wave.");
+  }
+
+  if (!ds3231.isSqw()) {
+    ds3231.emitSqwNoAlarm();
+    Serial.println("Alarm pin now emits square wave.");
   }
 
   pinMode(TICK_PIN, INPUT_PULLUP);
@@ -87,7 +99,7 @@ void setup() {
 }
 
 void do_business() {
-  Serial.println("*click*");
+  // Serial.println("*click*");
 
   DateTime dt = ds3231.getDateTime();
   float temperature = ds3231.getTemp();
@@ -116,6 +128,8 @@ void loop() {
     do_business();
     tick_registered = false;
   }
+  // delay(1000);
+  // tick_registered = true;
 }
 
 void tick_handler() {
