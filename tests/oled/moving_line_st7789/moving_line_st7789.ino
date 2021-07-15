@@ -22,7 +22,6 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7789.h>
 #include <SPI.h>
-#include <Arduino.h>
 
 #include <me_RotaryEncoder.h>
 
